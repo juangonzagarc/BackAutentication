@@ -1,28 +1,69 @@
 openapi: 3.0.0
 info:
-  title: API de Autenticación
-  description: API con autenticación y autorización usando JWT sin firmar.
+  title: API de Autenticación con JWT
+  description: API que implementa autenticación con JWT en Spring Boot.
   version: 1.0.0
 servers:
   - url: http://localhost:8081
+    description: Servidor local
+
 paths:
-  /auth/login:
+  /auth/register:
     post:
-      summary: Autenticación de usuario
+      summary: Registrar un nuevo usuario
+      operationId: registerUser
       requestBody:
         required: true
         content:
-          application/x-www-form-urlencoded:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstname:
+                  type: string
+                  example: Juan
+                lastname:
+                  type: string
+                  example: Pérez
+                username:
+                  type: string
+                  example: juan@gmail.com
+                password:
+                  type: string
+                  example: "123456"
+                country:
+                  type: string
+                  example: Brazil
+                role:
+                  type: string
+                  enum: [USER, ADMIN]
+                  example: USER
+      responses:
+        "200":
+          description: Usuario registrado exitosamente
+        "400":
+          description: Datos inválidos
+
+  /auth/login:
+    post:
+      summary: Iniciar sesión y obtener un token JWT
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
             schema:
               type: object
               properties:
                 username:
                   type: string
+                  example: juan@gmail.com
                 password:
                   type: string
+                  example: "123456"
       responses:
         "200":
-          description: Token de autenticación
+          description: Inicio de sesión exitoso
           content:
             application/json:
               schema:
@@ -30,53 +71,61 @@ paths:
                 properties:
                   token:
                     type: string
-  /protected/userA:
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        "401":
+          description: Credenciales inválidas
+
+  /api/v1/user1/data:
     get:
-      summary: Endpoint exclusivo para User A
+      summary: Endpoint exclusivo para USER
       security:
         - bearerAuth: []
       responses:
         "200":
-          description: Mensaje para User A
+          description: Acceso permitido para usuarios con rol USER
           content:
-            application/json:
+            text/plain:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-  /protected/userB:
+                type: string
+                example: "Este es el endpoint exclusivo para USER"
+        "403":
+          description: Acceso denegado
+
+  /api/v1/user2/data:
     get:
-      summary: Endpoint exclusivo para User B
+      summary: Endpoint exclusivo para ADMIN
       security:
         - bearerAuth: []
       responses:
         "200":
-          description: Mensaje para User B
+          description: Acceso permitido para usuarios con rol ADMIN
           content:
-            application/json:
+            text/plain:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-  /protected/shared:
+                type: string
+                example: "Este es el endpoint exclusivo para ADMIN"
+        "403":
+          description: Acceso denegado
+
+  /api/v1/shared:
     get:
-      summary: Endpoint compartido
+      summary: Endpoint accesible para USER y ADMIN
       security:
         - bearerAuth: []
       responses:
         "200":
-          description: Mensaje para ambos usuarios
+          description: Acceso permitido para usuarios con rol USER o ADMIN
           content:
-            application/json:
+            text/plain:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
+                type: string
+                example: "Este endpoint es accesible para USER y ADMIN"
+        "403":
+          description: Acceso denegado
+
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
+      bearerFormat: JWT
