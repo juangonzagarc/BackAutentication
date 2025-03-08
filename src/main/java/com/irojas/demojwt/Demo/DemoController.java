@@ -9,21 +9,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1")
 public class DemoController {
 
-    // Endpoint exclusivo para USER
     @GetMapping("/user1/data")
     @PreAuthorize("hasAuthority('USER')")
     public String user1Endpoint() {
         return "Este es el endpoint exclusivo para USER";
     }
 
-    // Endpoint exclusivo para ADMIN
     @GetMapping("/user2/data")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String user2Endpoint() {
         return "Este es el endpoint exclusivo para ADMIN";
     }
 
-    // Endpoint compartido para ambos
     @GetMapping("/shared")
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public String sharedEndpoint() {

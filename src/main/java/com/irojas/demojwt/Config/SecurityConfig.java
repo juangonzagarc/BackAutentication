@@ -8,9 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import com.irojas.demojwt.Jwt.JwtAuthenticationFilter;
-
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -27,9 +25,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authRequest ->
                         authRequest
-                                .requestMatchers("/auth/**").permitAll()  // Permitir acceso sin autenticación
-                                .requestMatchers("/api/v1/user2/**").hasAuthority("ADMIN") // Solo ADMIN accede a /admin/**
-                                .requestMatchers("/api/v1/user1/**").hasAuthority("USER") // Solo USER accede a /user/**
+                                .requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/api/v1/user2/**").hasAuthority("ADMIN")
+                                .requestMatchers("/api/v1/user1/**").hasAuthority("USER")
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManager ->
@@ -38,6 +36,4 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
-
-
 }

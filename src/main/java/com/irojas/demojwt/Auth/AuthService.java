@@ -5,12 +5,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.irojas.demojwt.Jwt.JwtService;
 import com.irojas.demojwt.User.Role;
 import com.irojas.demojwt.User.User;
 import com.irojas.demojwt.User.UserRepository;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -29,7 +27,6 @@ public class AuthService {
         return AuthResponse.builder()
             .token(token)
             .build();
-
     }
 
     public AuthResponse register(RegisterRequest request) {
@@ -41,13 +38,9 @@ public class AuthService {
             .country(request.getCountry())
             .role(Role.USER)
             .build();
-
         userRepository.save(user);
-
         return AuthResponse.builder()
             .token(jwtService.getToken(user))
             .build();
-        
     }
-
 }
