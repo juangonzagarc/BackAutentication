@@ -3,9 +3,10 @@ info:
   title: API de Autenticación con JWT
   description: API que implementa autenticación con JWT en Spring Boot.
   version: 1.0.0
+
 servers:
-  - url: http://localhost:8081
-    description: Servidor local
+  - url: https://backautentication.onrender.com
+    description: Servidor en producción
 
 paths:
   /auth/register:
