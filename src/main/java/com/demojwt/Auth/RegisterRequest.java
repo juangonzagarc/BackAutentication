@@ -1,4 +1,4 @@
-package com.irojas.demojwt.Auth;
+package com.demojwt.Auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,9 +7,12 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequest {
+@AllArgsConstructor
+public class RegisterRequest {
     String username;
-    String password; 
+    String password;
+    String firstname;
+    String lastname;
+    String country; 
 }

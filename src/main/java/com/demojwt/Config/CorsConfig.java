@@ -1,4 +1,4 @@
-package com.irojas.demojwt.Config;
+package com.demojwt.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

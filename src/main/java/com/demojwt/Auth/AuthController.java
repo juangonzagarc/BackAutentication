@@ -1,4 +1,4 @@
-package com.irojas.demojwt.Auth;
+package com.demojwt.Auth;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

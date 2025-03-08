@@ -1,4 +1,4 @@
-package com.irojas.demojwt.User;
+package com.demojwt.User;
 
 public enum Role {
     ADMIN,

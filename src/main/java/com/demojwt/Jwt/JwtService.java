@@ -1,4 +1,4 @@
-package com.irojas.demojwt.Jwt;
+package com.demojwt.Jwt;
 
 import java.security.Key;
 import java.util.Date;
